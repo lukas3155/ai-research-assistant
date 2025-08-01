@@ -15,7 +15,3 @@ def get_information(information: str):
     retriever = get_arxiv_retriever()
     docs = retriever.invoke(information)
     return docs
-
-import requests
-
-requests.request()
