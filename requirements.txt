@@ -1,0 +1,4 @@
+fastapi~=0.115.8
+langchain
+langchain-community
+openai
