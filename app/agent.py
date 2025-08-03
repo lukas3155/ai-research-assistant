@@ -5,11 +5,12 @@ from app.agent_tools import get_information
 from app.const import SYSTEM_INSTRUCTION
 
 chat = ChatOpenAI(
-    temperature = 0.3,
-    model_name="google/gemma-3-12b",
-    base_url="http://127.0.0.1:1234/v1",
-    api_key='bekabekabeka'
+    temperature=0.3,
+    model_name=os.getenv('LLM_MODEL_NAME', 'google/gemma-3-12b'),
+    base_url=os.getenv('LLM_BASE_URL', 'http://127.0.0.1:1234/v1'),
+    api_key=os.getenv('LLM_API_KEY', 'bekabekabeka')
 )
+
 
 memory = ConversationBufferMemory(
     memory_key="chat_history",

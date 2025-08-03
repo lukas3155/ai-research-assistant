@@ -1,0 +1,48 @@
+version: '3.8'
+
+services:
+
+  ollama:
+    image: ollama/ollama:latest
+    container_name: ollama-server
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    environment:
+      - OLLAMA_HOST=0.0.0.0
+    restart: unless-stopped
+
+  research-assistant:
+    build: .
+    container_name: research-assistant-app
+    ports:
+      - "8000:8000"
+    environment:
+      - LLM_BASE_URL=http://ollama:11434
+      - LLM_API_KEY=not-needed-for-ollama
+    env_file:
+      - .env
+    depends_on:
+      - ollama
+    restart: unless-stopped
+    volumes:
+      - ./app:/app/app:ro
+      - ./logs:/app/logs
+
+  ollama-webui:
+    image: ghcr.io/open-webui/open-webui:main
+    container_name: ollama-webui
+    ports:
+      - "3000:8080"
+    environment:
+      - OLLAMA_BASE_URL=http://ollama:11434
+    depends_on:
+      - ollama
+    restart: unless-stopped
+    volumes:
+      - open-webui:/app/backend/data
+
+volumes:
+  ollama_data:
+  open-webui:

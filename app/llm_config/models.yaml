@@ -1,0 +1,17 @@
+default_model: temp
+
+models:
+  gemma:
+    type: local
+    name: "google/gemma-3-12b"
+
+  gpt-4o:
+    type: openai
+    name: "gpt-4o"
+    api_key_env: "OPENAI_API_KEY"
+
+
+generation:
+  temperature: 0.3
+  top_p: 0.9
+  max_tokens: 512
